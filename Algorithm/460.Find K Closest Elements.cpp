@@ -1,24 +1,27 @@
 /*
- * @lc app=leetcode id=852 lang=c
+ * @lc app=leetcode id=658 lang=cpp
  *
- * [852] Peak Index in a Mountain Array
+ * [658] Find K Closest Elements
  */
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
 
-int peakIndexInMountainArray(int *A, int ASize)
+class Solution
 {
-    if (ASize == 0)
+public:
+    vector<int> findClosestElements(vector<int> &arr, int k, int x)
     {
-        return 0;
-    }
-    int peakIndex = 0;
-    int peak = A[0];
-    for (int i = 1; i < ASize; i++)
-    {
-        if (A[i] > peak)
+        int left = 0, right = arr.size() - k;
+        while (left < right)
         {
-            peak = A[i];
-            peakIndex = i;
+            int mid = left + (right - left) / 2;
+            if (x - arr[mid] > arr[mid + k] - x)
+                left = mid + 1;
+            else
+                right = mid;
         }
+        return vector<int>(arr.begin() + left, arr.begin() + left + k);
     }
-    return peakIndex;
-}
+};
